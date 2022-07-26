@@ -4,7 +4,24 @@ import Comment from "./componets/Comment";
 import "./App.css";
 function App() {
   const [comments, setComments] = useState([
-    { title: "sample", id: uuidv4(), child: [] },
+    {
+      title: "sample",
+      id: uuidv4(),
+      child: [
+        { title: "1", id: "random" },
+        {
+          title: "2",
+          id: "random2",
+          child: [
+            {
+              title: "3-inner",
+              id: "random3",
+              child: [{ title: "3-inner-inner", id: "random4" }],
+            },
+          ],
+        },
+      ],
+    },
   ]);
   const handleClick = () => {
     const inpEle = document.getElementById("current-comment");
