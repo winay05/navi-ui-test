@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import Comment from "./componets/Comment";
+import "./App.css";
 function App() {
+  const [comments, setComments] = useState([
+    { title: "sample", id: uuidv4(), child: [] },
+  ]);
+  const handleClick = () => {
+    const inpEle = document.getElementById("current-comment");
+    const val = inpEle.value;
+
+    setComments([{ title: val, id: uuidv4(), child: [] }, ...comments]);
+    inpEle.value = "";
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <main className="container">
+        <h1>Comment Widget</h1>
+        <input id="current-comment" placeholder="Enter a comment" />
+        <button onClick={handleClick}>Add comment</button>
+
+        {comments && comments.length ? (
+          <div>
+            {comments.map((comment) => {
+              console.log(comment);
+              return (
+                <div key={comment.id}>
+                  <Comment comment={comment} />
+                </div>
+              );
+            })}
+          </div>
+        ) : null}
+      </main>
     </div>
   );
 }
