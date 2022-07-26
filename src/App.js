@@ -11,16 +11,25 @@ function App() {
     {
       title: "sample",
       id: uuidv4(),
+      timestamp: new Date().toString(),
       child: [
         { title: "1", id: "random" },
         {
           title: "2",
           id: "random2",
+          timestamp: new Date().toString(),
           child: [
             {
               title: "3-inner",
               id: "random3",
-              child: [{ title: "3-inner-inner", id: "random4" }],
+              timestamp: new Date().toString(),
+              child: [
+                {
+                  title: "3-inner-inner",
+                  id: "random4",
+                  timestamp: new Date().toString(),
+                },
+              ],
             },
           ],
         },
@@ -32,7 +41,10 @@ function App() {
     const inpEle = document.getElementById("current-comment");
     const val = inpEle.value;
 
-    setComments([{ title: val, id: uuidv4(), child: [] }, ...comments]);
+    setComments([
+      { title: val, id: uuidv4(), child: [], timestamp: new Date().toString() },
+      ...comments,
+    ]);
     inpEle.value = "";
   };
   const handleDelete = (id) => {
@@ -49,9 +61,17 @@ function App() {
   return (
     <div className="App">
       <main className="container">
-        <h1>Comment Widget</h1>
-        <input id="current-comment" placeholder="Enter a comment" />
-        <button onClick={handleAddComment}>Add comment</button>
+        <h1 className="main-title">Comment Widget</h1>
+        <div className="add-comment-container">
+          <input
+            className="comment-box"
+            id="current-comment"
+            placeholder="Enter a comment"
+          />
+          <button className="add-comment-button" onClick={handleAddComment}>
+            Add comment
+          </button>
+        </div>
 
         {comments && comments.length ? (
           <div>
